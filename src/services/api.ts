@@ -21,7 +21,6 @@ const getProducts = async () => {
       }
     );
     const response = await data.json();
-    console.log(response.data.productData);
     return response.data.productData;
   } catch (err) {
     if (err instanceof Error) {
@@ -51,7 +50,6 @@ const createProduct = async (body: Product) => {
       }
     );
     const response = await data.json();
-    console.log(response);
     return response.data;
   } catch (err) {
     if (err instanceof Error) {
@@ -82,7 +80,6 @@ const updateProduct = async (body: Product) => {
       }
     );
     const response = await data.json();
-    console.log(response);
     return response.data;
   } catch (err) {
     if (err instanceof Error) {
