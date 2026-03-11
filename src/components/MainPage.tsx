@@ -47,7 +47,6 @@ const MainPage = () => {
       ...res,
       isUserCreated: true
     }
-    console.log(res);
     const updatedList: Product[] = [res, ...productList];
 
     setProductList(updatedList);
@@ -70,8 +69,6 @@ const MainPage = () => {
       "productDescription": description,
       "productPrice": price ? price : 0
     };
-
-    console.log(productList.filter(p => id === p.productId)[0].isUserCreated)
 
     if (productList.filter(p => id === p.productId)[0].isUserCreated === true) {
       const updatedList = productList.map(p => {
