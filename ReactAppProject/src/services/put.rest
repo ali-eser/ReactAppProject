@@ -1,0 +1,31 @@
+PUT https://apihero-api.quixtools.com/api/v1/store/updateProduct
+Content-Type: application/json
+
+{
+"brand": "dsfg",
+
+"categoryId": "ct001",
+
+"createDate": "2026-03-11T14:52:34.186Z",
+
+"productDescription": "sdfg",
+
+"productId": "pr134487",
+
+"productName": "sdfg",
+
+"productPrice": 234,
+
+"reviews": 0,
+
+"sold": 0,
+
+"stock": 50,
+
+"subCategoryId": "subCt001",
+
+"updateDate": "2026-03-11T14:52:34.186Z",
+
+"url": "sdfg"
+}
+
