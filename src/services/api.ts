@@ -1,3 +1,5 @@
+import { type Product } from "@/interfaces/interfaces";
+
 const baseURL = "https://apihero-api.quixtools.com/api/v1";
 
 const getProducts = async () => {
@@ -22,11 +24,14 @@ const getProducts = async () => {
     console.log(response.data.productData);
     return response.data.productData;
   } catch (err) {
-    return { message: err.message };
+    if (err instanceof Error) {
+      console.log(err.message);
+      return { message: err.message };
+    }
   }
 };
 
-const createProduct = async body => {
+const createProduct = async (body: Product) => {
   try {
     const data = await fetch(
       `${baseURL}/store/createProduct`, {
@@ -38,7 +43,7 @@ const createProduct = async body => {
           "brand": body.brand,
           "productName": body.productName,
           "productDescription": body.productDescription,
-          "productPrice": parseInt(body.productPrice),
+          "productPrice": body.productPrice,
           "categoryId": "ct001",
           "subCategoryId": "subCt001",
           "stock": 50
@@ -49,11 +54,14 @@ const createProduct = async body => {
     console.log(response);
     return response.data;
   } catch (err) {
-    return { message: err.message };
+    if (err instanceof Error) {
+      console.log(err.message);
+      return { message: err.message };
+    }
   }
 };
 
-const updateProduct = async body => {
+const updateProduct = async (body: Product) => {
   try {
     const data = await fetch(
       `${baseURL}/store/updateProduct`, {
@@ -66,7 +74,7 @@ const updateProduct = async body => {
           "brand": body.brand,
           "productName": body.productName,
           "productDescription": body.productDescription,
-          "productPrice": parseInt(body.productPrice),
+          "productPrice": body.productPrice,
           "categoryId": "cat001",
           "subCategoryId": "subCat001",
           "stock": 50
@@ -77,11 +85,14 @@ const updateProduct = async body => {
     console.log(response);
     return response.data;
   } catch (err) {
-    return { message: err.message };
+    if (err instanceof Error) {
+      console.log(err.message);
+      return { message: err.message };
+    }
   }
 };
 
-const deleteProduct = async (id) => {
+const deleteProduct = async (id: string) => {
   try {
     const data = await fetch(
       `${baseURL}/store/deleteProduct/${id}`, {
@@ -91,7 +102,10 @@ const deleteProduct = async (id) => {
     const response = await data.json();
     console.log(response);
   } catch (err) {
-    console.log({ message: err.message });
+    if (err instanceof Error) {
+      console.log(err.message);
+      return { message: err.message };
+    }
   }
 }
 

@@ -17,11 +17,13 @@ import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button";
 import { Trash2Icon, SquarePen } from "lucide-react"
-import services from "../services/api"
+import services from "../services/api.ts"
 import { useEffect, useState } from "react";
 
+import { type Product } from "@/interfaces/interfaces";
+
 const MainPage = () => {
-  const [productList, setProductList] = useState([]);
+  const [productList, setProductList] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
 
   const [brand, setBrand] = useState("");
@@ -29,7 +31,7 @@ const MainPage = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
 
-  const addProduct = async event => {
+  const addProduct = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const newProduct = {
@@ -39,28 +41,28 @@ const MainPage = () => {
       "productPrice": price
     };
 
-    let res = await services.createProduct(newProduct);
+    let res: Product = await services.createProduct(newProduct);
 
     res = {
       ...res,
       isUserCreated: true
     }
     console.log(res);
-    const updatedList = [res, ...productList];
+    const updatedList: Product[] = [res, ...productList];
 
     setProductList(updatedList);
 
     setBrand("");
     setDescription("");
-    setPrice("");
+    setPrice(0);
   };
 
-  const deleteProduct = async (id) => {
+  const deleteProduct = async (id: string) => {
     await services.deleteProduct(id);
     setProductList(productList.filter(p => id !== p.productId));
   }
 
-  const updateProduct = async (id) => {
+  const updateProduct = async (id: string) => {
     const updatedProduct = {
       "productId": id,
       "brand": brand,
@@ -101,7 +103,7 @@ const MainPage = () => {
     }
     setBrand("");
     setDescription("");
-    setPrice("");
+    setPrice(0);
   };
 
   useEffect(() => {
@@ -153,7 +155,7 @@ const MainPage = () => {
                 <FieldLabel htmlFor="price" className="w-1/2">
                   Price
                 </FieldLabel>
-                <Input id="price" type="number" placeholder="Price" onChange={(e) => setPrice(e.target.value)} />
+                <Input id="price" type="number" placeholder="Price" onChange={(e) => setPrice(parseInt(e.target.value))} />
               </Field>
               <Button type="submit" variant="outline" >Add</Button>
             </FieldGroup>
@@ -235,13 +237,13 @@ const MainPage = () => {
                                 <FieldLabel htmlFor="price" className="w-1/2">
                                   Price
                                 </FieldLabel>
-                                <Input id="price" type="number" placeholder="Price" onChange={(e) => setPrice(e.target.value)} />
+                                <Input id="price" type="number" placeholder="Price" onChange={(e) => setPrice(parseInt(e.target.value))} />
                               </Field>
                             </FieldGroup>
-                            <Button id={p.productId} variant="outline" onClick={(e) => updateProduct(e.target.id)}>Update</Button>
+                            <Button id={p.productId} variant="outline" onClick={(e) => updateProduct((e.target as HTMLElement).id)}>Update</Button>
                           </PopoverContent>
                         </Popover>
-                        <Button id={p.productId} variant="destructive" onClick={(e) => deleteProduct(e.target.id)}>
+                        <Button id={p.productId} variant="destructive" onClick={(e) => deleteProduct((e.target as HTMLElement).id)}>
                           <Trash2Icon />
                         </Button>
                       </div>
